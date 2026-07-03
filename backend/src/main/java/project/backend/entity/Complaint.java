@@ -30,6 +30,9 @@ public class Complaint {
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+    @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
 }

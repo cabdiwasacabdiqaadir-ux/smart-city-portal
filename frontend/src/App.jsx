@@ -1,122 +1,94 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
-
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Navigation from "./components/Navigation";
+import PublicOnlyRoute from "./components/PublicOnlyRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
+import CitizenDashboard from "./pages/dashboard/citizen/Dashboard";
+import DashboardHome from "./pages/dashboard/citizen/DashboardHome";
+import AddComplaint from "./pages/dashboard/citizen/AddComplaint";
+import MyComplaints from "./pages/dashboard/citizen/MyComplaints";
+import Profile from "./pages/dashboard/citizen/Profile";
+import OfficerDashboardHome from "./pages/dashboard/officer/OfficerDashboardHome";
+import OficerComplaint from "./pages/dashboard/officer/OficerComplaint";
+import OfficerDashboard from "./pages/dashboard/officer/Dashboard";
+import OfficerProfile from "./pages/dashboard/officer/profile";
+import AdminDashboard from "./pages/dashboard/admin/Dashboard";
+import AdminDashboardHome from "./pages/dashboard/admin/AdminDashboardHome";
+import Officers from "./pages/dashboard/admin/Officers";
+import Departments from "./pages/dashboard/admin/Departments";
+import Categories from "./pages/dashboard/admin/Categories";
+import Complaints from "./pages/dashboard/admin/Complaints";
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+    <div>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route
+          path="/register"
+          element={
+            <PublicOnlyRoute>
+              <Register />
+            </PublicOnlyRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicOnlyRoute>
+              <Login />
+            </PublicOnlyRoute>
+          }
+        />
+        <Route
+          path="/citizen/*"
+          element={
+            <ProtectedRoute>
+              <CitizenDashboard />
+            </ProtectedRoute>
+          }
         >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+          <Route index element={<DashboardHome />} />
+          <Route path="complaints/new" element={<AddComplaint />} />
+          <Route path="complaints" element={<MyComplaints />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
+        <Route
+          path="/officer/*"
+          element={
+            <ProtectedRoute>
+              <OfficerDashboard />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<OfficerDashboardHome />} />
+          <Route path="complaints" element={<OficerComplaint />} />
+          <Route path="profile" element={<OfficerProfile />} />
+        </Route>
+        <Route
+          path="/admin/*"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<AdminDashboardHome />} />
+          <Route path="officers" element={<Officers />} />
+          <Route path="departments" element={<Departments />} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="complaints" element={<Complaints />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>  
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.backend.entity.Department;
 import project.backend.enums.Role;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +19,7 @@ public class UserRequestDTO {
     @Email(message = "Invalid email format")
     @NotBlank(message = "Email is required")
     private String email;
-    @Size(min = 4, message = "Password must be at least 4 characters")
     private String password;
     private Role role;
+    private Long departmentId;
 }

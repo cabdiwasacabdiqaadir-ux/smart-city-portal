@@ -10,6 +10,7 @@ import project.backend.enums.Priority;
 import project.backend.enums.Status;
 import project.backend.repository.CategoryRepository;
 import project.backend.repository.ComplaintRepository;
+import project.backend.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,13 +22,11 @@ public class ComplaintService {
 
     private final ComplaintRepository complaintRepository;
     private final CategoryRepository categoryRepository;
-
+    private final UserRepository userRepository;
     public ComplaintResponseDTO createComplaint(ComplaintRequestDTO dto, User user) {
-
         if (user == null) {
             throw new RuntimeException("Please login first");
         }
-
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
@@ -54,7 +53,6 @@ public class ComplaintService {
 
         return mapToResponse(saved);
     }
-
     public List<ComplaintResponseDTO> getAllComplaints() {
 
         return complaintRepository.findAll()
@@ -62,7 +60,22 @@ public class ComplaintService {
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
-
+    public List<ComplaintResponseDTO> getOfficerComplaints(String email){
+        User officer = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException("Officer not found")
+                );
+        if(officer.getDepartment() == null){
+            throw new RuntimeException(
+                    "Officer has no department"
+            );
+        }
+        return complaintRepository
+                .findByDepartment(officer.getDepartment())
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
     public ComplaintResponseDTO getComplaintById(Long id) {
 
         Complaint complaint = complaintRepository.findById(id)

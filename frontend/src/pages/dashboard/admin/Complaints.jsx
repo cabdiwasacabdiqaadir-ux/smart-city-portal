@@ -26,6 +26,7 @@ const Complaints = () => {
         setComplaints(complaintsResponse.data);
 
         setSlaComplaints(slaResponse.data);
+        console.log("SLA Complaints:", slaResponse.data);
       } catch (error) {
         console.log(error);
 
@@ -125,13 +126,15 @@ const Complaints = () => {
               <table className="w-full">
                 <thead>
                   <tr className="border-b">
+                    <th className="p-3 text-left">ID</th>
+
                     <th className="p-3 text-left">Complaint</th>
+
+                    <th className="p-3 text-left">Citizen</th>
 
                     <th className="p-3 text-left">Department</th>
 
-                    <th className="p-3 text-left">Priority</th>
-
-                    <th className="p-3 text-left">Deadline</th>
+                    <th className="p-3 text-left">Overdue</th>
 
                     <th className="p-3 text-left">Status</th>
                   </tr>
@@ -139,15 +142,17 @@ const Complaints = () => {
 
                 <tbody>
                   {slaComplaints.map((c) => (
-                    <tr key={c.id} className="border-b">
+                    <tr key={c.complaintId} className="border-b">
+                      <td className="p-3">{c.complaintId}</td>
+
                       <td className="p-3 font-semibold">{c.title}</td>
+
+                      <td className="p-3">{c.citizen}</td>
 
                       <td className="p-3">{c.department}</td>
 
-                      <td className="p-3">{c.priority}</td>
-
-                      <td className="p-3">
-                        {new Date(c.deadline).toLocaleString()}
+                      <td className="p-3 text-red-600 font-semibold">
+                        {c.overdueHours} hrs
                       </td>
 
                       <td className="p-3">

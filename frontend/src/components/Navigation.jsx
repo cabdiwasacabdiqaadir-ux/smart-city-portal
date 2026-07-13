@@ -25,7 +25,7 @@ const Navigation = () => {
   };
 
   return (
-    <div className="border-b px-6 py-3 flex items-center justify-between bg-background text-foreground">
+     <div className="sticky top-0 z-50 border-b px-6 py-3 flex items-center justify-between bg-background text-foreground">
       <Link to="/" className="font-bold text-xl">
         Smart City
       </Link>

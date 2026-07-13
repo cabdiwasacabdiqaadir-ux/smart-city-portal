@@ -1,7 +1,26 @@
+import HeroSection from "@/components/home/HeroSection";
+import FeaturesSection from "@/components/home/FeaturesSection";
+import HowItWorks from "@/components/home/HowItWorks";
+import StatsSection from "@/components/home/StatsSection";
+import WhyChooseUs from "@/components/home/WhyChooseUs";
+import CTASection from "@/components/home/CTASection";
+
 const Home = () => {
   return (
-    <div>Home</div>
-  )
-}
+    <main>
+      <HeroSection />
 
-export default Home
+      <FeaturesSection />
+
+      <HowItWorks />
+
+      <StatsSection />
+
+      <WhyChooseUs />
+
+      <CTASection />
+    </main>
+  );
+};
+
+export default Home;

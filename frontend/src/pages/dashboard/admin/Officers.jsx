@@ -170,9 +170,7 @@ const Officers = () => {
   const deleteOfficer = async (id) => {
     try {
       await api.delete(`/users/${id}`);
-
       toast.success("Officer deleted");
-
       await refreshOfficers();
     } catch (error) {
       console.log(error);

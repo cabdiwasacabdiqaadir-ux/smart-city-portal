@@ -22,6 +22,7 @@ import Officers from "./pages/dashboard/admin/Officers";
 import Departments from "./pages/dashboard/admin/Departments";
 import Categories from "./pages/dashboard/admin/Categories";
 import Complaints from "./pages/dashboard/admin/Complaints";
+import Footer from "./components/Footer";
 function App() {
   return (
     <div>
@@ -87,6 +88,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
         </Route>  
       </Routes>
+      <Footer />
     </div>
   );
 }
